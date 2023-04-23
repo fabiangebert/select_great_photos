@@ -3,9 +3,8 @@ import math
 import numpy as np
 from keras.applications.inception_v3 import preprocess_input
 from keras.models import load_model
-
-# Load the model
 from keras.preprocessing.image import ImageDataGenerator
+from sklearn.metrics import classification_report
 
 from params import img_height, img_width, batch_size
 
@@ -36,8 +35,6 @@ predicted_classes = np.argmax(preds, axis=1)
 true_classes = test_generator.classes
 
 # Print the classification report
-from sklearn.metrics import classification_report
-
 print(classification_report(true_classes, predicted_classes, target_names=test_generator.class_indices.keys()))
 
 # Get the filenames from the generator
