@@ -28,7 +28,7 @@ num_epochs = 10
 image_files = []
 for root, dirs, files in os.walk(image_dir):
     for file in files:
-        if file.endswith('.jpg'):
+        if file.lower().endswith('.jpg'):
             image_files.append(os.path.join(root, file))
 
 # Shuffle the list of image files
