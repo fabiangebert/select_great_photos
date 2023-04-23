@@ -9,9 +9,10 @@
 
 ## Setup
 
-```
-pip install tensorflow scikit-learn Pillow
-```
+* install required Python 3 packages
+  ```
+  pip install tensorflow scikit-learn Pillow
+  ```
 
 * on macOS you need `tensorflow-macos`
 
