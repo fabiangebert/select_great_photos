@@ -4,7 +4,7 @@ import shutil
 import numpy as np
 from keras.models import load_model
 
-from params import img_width, img_height, min_class_thres
+from params import img_width, img_height, min_class_prob
 from preprocess import prepare_image
 
 model = load_model('model.h5')
@@ -34,7 +34,11 @@ for file_path in file_paths:
     class_index = np.argmax(predictions, axis=1)[0]
     class_name = class_dict[class_index]
 
-    if predictions.max() < min_class_thres:
+    predicted_class_prob = predictions.max()
+
+    print(f'{os.path.basename(file_path)} predicted to be of class {class_name} with prob {predicted_class_prob}')
+
+    if predicted_class_prob < min_class_prob:
         class_name = 'undecided'
 
     # Move the image to the corresponding class folder
