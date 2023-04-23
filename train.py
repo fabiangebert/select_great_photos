@@ -2,6 +2,7 @@
 import os
 import random
 
+import numpy as np
 from keras import Model
 from keras.applications.inception_v3 import preprocess_input, InceptionV3
 from keras.layers import GlobalAveragePooling2D, Dense
@@ -107,11 +108,18 @@ model.compile(optimizer=Adam(learning_rate=0.0001),
               loss='categorical_crossentropy',
               metrics=['accuracy'])
 
+# compute class weights
+total_samples = len(train_generator.labels)
+class_counts = np.bincount(train_generator.labels)
+num_classes = class_counts.size
+class_weights = {i: 1 / count * total_samples / num_classes for i, count in enumerate(class_counts)}
+
 # Train the model
 history = model.fit(
     train_generator,
     epochs=num_epochs,
-    validation_data=val_generator
+    validation_data=val_generator,
+    class_weight=class_weights,
 )
 model.save("model.h5")
 
